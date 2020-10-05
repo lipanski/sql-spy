@@ -4,9 +4,9 @@
 
 A gem to track all SQL queries performed inside a given block.
 
-You can use **sql-spy** to test various scenarios, like the total query count, N+1 queries or queries per table, inserts vs. updates vs. deletes and many more. You can also use it to validate or debug your SQL.
+You can use **sql-spy** to test various things, like the total amount of queries performed by a piece of code, the amount of queries per table, inserts vs. updates or even N+1 queries. You can also use it to validate and debug your SQL.
 
-This is very similar to how [ActiveRecord is tested](https://github.com/rails/rails/blob/6-0-stable/activerecord/test/cases/test_case.rb).
+The implementation is inspired by how [ActiveRecord is tested](https://github.com/rails/rails/blob/6-0-stable/activerecord/test/cases/test_case.rb).
 
 ## Usage
 
