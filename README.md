@@ -1,5 +1,7 @@
 # sql-spy
 
+<a href="https://travis-ci.com/github/lipanski/sql-spy"><img src="https://api.travis-ci.com/lipanski/sql-spy.svg?branch=master"></a>
+
 A gem to track all SQL queries performed inside a given block.
 
 You can use **sql-spy** to test various scenarios, like the total query count, N+1 queries or queries per table, inserts vs. updates vs. deletes and many more. You can also use it to validate or debug your SQL.
