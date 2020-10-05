@@ -1,10 +1,10 @@
-# sql-spy
+# SqlSpy
 
 <a href="https://travis-ci.com/github/lipanski/sql-spy"><img src="https://api.travis-ci.com/lipanski/sql-spy.svg?branch=master"></a>
 
 A gem to track all SQL queries performed inside a given block.
 
-You can use **sql-spy** to test various things, like the total amount of queries performed by a piece of code, the amount of queries per table, inserts vs. updates or even N+1 queries. You can also use it to validate and debug your SQL.
+You can use **SqlSpy** to test various things, like the total amount of queries performed by a piece of code, the amount of queries per table, inserts vs. updates or even N+1 queries. You can also use it to validate and debug your SQL.
 
 The implementation is inspired by how [ActiveRecord is tested](https://github.com/rails/rails/blob/6-0-stable/activerecord/test/cases/test_case.rb).
 
@@ -13,7 +13,7 @@ The implementation is inspired by how [ActiveRecord is tested](https://github.co
 Add the gem to your `Gemfile`:
 
 ```ruby
-gem "sql-spy"
+gem "sql_spy"
 ```
 
 ...and install it with:
