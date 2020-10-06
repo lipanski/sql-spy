@@ -61,11 +61,14 @@ class SqlSpyTest < Minitest::Test
     end
 
     assert_instance_of Array, queries
-    assert_equal 1, queries.count
+    assert_equal 3, queries.count
 
-    query = queries.first
-    assert query.insert?
-    assert_equal "User", query.model_name
+    assert_match %r{(begin transaction|begin)}i, queries[0].sql
+
+    assert queries[1].insert?
+    assert_equal "User", queries[1].model_name
+
+    assert_match %r{(end transaction|commit)}i, queries[2].sql
   end
 
   def test_single_update_query
@@ -123,5 +126,21 @@ class SqlSpyTest < Minitest::Test
     query = queries.first
     assert_instance_of Float, query.duration
     refute query.duration.zero?
+  end
+
+  def test_execute_raw_sql
+    queries = SqlSpy.track do
+      ActiveRecord::Base.connection.execute("SELECT COUNT(*) FROM users;")
+    end
+
+    assert_equal 1, queries.count
+
+    query = queries.first
+    assert_equal "SELECT COUNT(*) FROM users;", query.sql
+    assert_nil query.model_name
+    assert query.select?
+    refute query.insert?
+    refute query.update?
+    refute query.delete?
   end
 end

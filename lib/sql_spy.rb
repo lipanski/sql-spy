@@ -1,7 +1,7 @@
 module SqlSpy
   Query = Struct.new(:name, :sql, :duration) do
     def model_name
-      name.split.first
+      String(name).split.first
     end
 
     def select?
@@ -29,7 +29,7 @@ module SqlSpy
     end
 
     def call(_name, start, finish, _message_id, values)
-      return if values[:name].nil? || IGNORED_NAMES.include?(values[:name])
+      return if IGNORED_NAMES.include?(values[:name])
       return if values[:cached]
 
       queries << Query.new(values[:name], values[:sql], (finish - start) * 1000)
