@@ -3,10 +3,7 @@ require "active_record"
 require "pg"
 require "sqlite3"
 
-SQLITE_DATABASE = File.expand_path("../test.sqlite3", __dir__)
-File.delete(SQLITE_DATABASE) if File.file?(SQLITE_DATABASE)
-
-ENV["DATABASE_URL"] ||= "sqlite3://" + SQLITE_DATABASE
+ENV["DATABASE_URL"] ||= "sqlite3://" + File.expand_path("../test.sqlite3", __dir__)
 ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
 
 ActiveRecord::Schema.define do
@@ -33,6 +30,13 @@ class Post < ActiveRecord::Base
 end
 
 require_relative "../lib/sql_spy"
+
+Minitest.after_run do
+  config = ActiveRecord::Base.connection_config
+  if config[:adapter] == "sqlite3" && File.file?(config[:database])
+    File.delete(config[:database])
+  end
+end
 
 class SqlSpyTest < Minitest::Test
   def setup

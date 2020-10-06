@@ -7,5 +7,5 @@ cache: bundler
 before_install: gem install bundler -v 2.1.4
 before_script: psql -U postgres -c 'create database sql_spy_test;'
 env:
-  - DATABASE_URL=sqlite3:///tmp/sql_spy_test.sqlite3
-  - DATABASE_URL=postgres://postgres/sql_spy_test
+  - DATABASE_URL=sqlite3:///sql_spy_test.sqlite3
+  - DATABASE_URL=postgres:///sql_spy_test
