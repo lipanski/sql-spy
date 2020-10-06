@@ -4,7 +4,7 @@
 
 A gem to track all SQL queries performed inside a given block.
 
-You can use **SqlSpy** to test the total amount of queries performed by a piece of code, the amount of queries per table, inserts vs. updates, or query duration. You can also use it to validate and debug your SQL or to prevent N+1 queries.
+You can use **SqlSpy** to test the total amount of queries performed by a piece of code, the amount of queries per table, selects vs. inserts vs. updates vs. deletes, or query duration. You can also use it to validate and debug your SQL or to prevent N+1 queries.
 
 The implementation is inspired by how [ActiveRecord is tested](https://github.com/rails/rails/blob/6-0-stable/activerecord/test/cases/test_case.rb).
 
