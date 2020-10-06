@@ -2,7 +2,7 @@
 
 <a href="https://travis-ci.com/github/lipanski/sql-spy"><img src="https://api.travis-ci.com/lipanski/sql-spy.svg?branch=master"></a>
 
-A gem to track all SQL queries performed inside a given block.
+A gem to track all SQL queries performed inside a block of code.
 
 You can use **SqlSpy** to test the total amount of queries performed by a piece of code, the amount of queries per table, selects vs. inserts vs. updates vs. deletes, or query duration. You can also use it to validate and debug your SQL or to prevent N+1 queries.
 
@@ -60,6 +60,25 @@ assert queries.none? { |query| query.duration > 100 }
 # Fail on N+1 queries: expect no more than 1 query per table
 queries_by_model = queries.group_by(&:model_name)
 assert queries_by_model.none? { |model_name, queries| queries.count > 1 }
+```
+
+## Development
+
+The gem is tested with Postgres 9.6 and SQLite 3.
+
+To run tests with SQLite:
+
+```sh
+bundle exec rake
+```
+
+To run tests with Postgres:
+
+```sh
+# Create a test database
+cretedb sql_spy_test
+
+DATABASE_URL=postgres:///sql_spy_test bundle exec rake
 ```
 
 ## License
