@@ -2,8 +2,9 @@ require "minitest/autorun"
 require "active_record"
 require "pg"
 require "sqlite3"
+require_relative "../lib/sql_spy"
 
-ENV["DATABASE_URL"] ||= "sqlite3://" + File.expand_path("../test.sqlite3", __dir__)
+ENV["DATABASE_URL"] ||= "sqlite3://" + File.expand_path("../test.sqlite", __dir__)
 ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
 
 ActiveRecord::Schema.define do
@@ -28,8 +29,6 @@ end
 class Post < ActiveRecord::Base
   belongs_to :user
 end
-
-require_relative "../lib/sql_spy"
 
 Minitest.after_run do
   config = ActiveRecord::Base.connection_config
