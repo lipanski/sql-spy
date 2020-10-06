@@ -4,7 +4,7 @@
 
 A gem to track all SQL queries performed inside a given block.
 
-You can use **SqlSpy** to test various things, like the total amount of queries performed by a piece of code, the amount of queries per table, inserts vs. updates or even N+1 queries. You can also use it to validate and debug your SQL.
+You can use **SqlSpy** to test the total amount of queries performed by a piece of code, the amount of queries per table, inserts vs. updates, or query duration. You can also use it to validate and debug your SQL or to prevent N+1 queries.
 
 The implementation is inspired by how [ActiveRecord is tested](https://github.com/rails/rails/blob/6-0-stable/activerecord/test/cases/test_case.rb).
 
@@ -28,15 +28,11 @@ Wrap the code you'd like to track inside `SqlSpy.track {}`:
 require "sql_spy"
 
 queries = SqlSpy.track do
-  User.create(name: "Mario")
-  users = User.limit(5).to_a
-  users.each { |user| user.posts.to_a }
+  # Some code that triggers ActiveRecord queries
 end
 ```
 
-The return value of this block is **an Array containing all the queries performed inside the block**.
-
-Every query inside the Array exposes the following **methods**:
+The `SqlSpy.track` method will return **an array containing all the queries performed inside the block**. Every object inside this array exposes the following **methods**:
 
 - `#model_name`: The model name (e.g. "User").
 - `#sql`: The SQL query that was performed.
@@ -46,7 +42,7 @@ Every query inside the Array exposes the following **methods**:
 - `#update?`: Is this an *UPDATE* query?
 - `#delete?`: Is this a *DELETE* query?
 
-Here are some **ideas** of how you could use this:
+Here are some **ideas** for how you could use this:
 
 ```ruby
 # Expect less than 5 queries
