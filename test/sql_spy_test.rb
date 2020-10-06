@@ -1,19 +1,26 @@
 require "minitest/autorun"
 require "active_record"
+require "pg"
 require "sqlite3"
 
 SQLITE_DATABASE = File.expand_path("../test.sqlite3", __dir__)
 File.delete(SQLITE_DATABASE) if File.file?(SQLITE_DATABASE)
 
-ActiveRecord::Base.establish_connection(adapter: "sqlite3", database: SQLITE_DATABASE)
+ENV["DATABASE_URL"] ||= "sqlite3://" + SQLITE_DATABASE
+ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
+
 ActiveRecord::Schema.define do
-  create_table :users do |t|
-    t.string :name
+  unless table_exists?(:users)
+    create_table :users do |t|
+      t.string :name
+    end
   end
 
-  create_table :posts do |t|
-    t.references :user
-    t.string :title
+  unless table_exists?(:posts)
+    create_table :posts do |t|
+      t.references :user
+      t.string :title
+    end
   end
 end
 

@@ -22,6 +22,7 @@ GEM
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     minitest (5.14.2)
+    pg (1.2.3)
     rake (12.3.3)
     sqlite3 (1.4.2)
     thread_safe (0.3.6)
@@ -36,6 +37,7 @@ DEPENDENCIES
   activerecord (~> 6.0)
   byebug
   minitest (~> 5.0)
+  pg
   rake (~> 12.0)
   sql_spy!
   sqlite3
