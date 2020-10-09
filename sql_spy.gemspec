@@ -4,7 +4,7 @@ Gem::Specification.new do |spec|
   spec.authors = ["Florin Lipan"]
   spec.email = ["florinlipan@gmail.com"]
 
-  spec.summary = %q{A gem to track SQL queries triggered by a particular block of code}
+  spec.summary = %q{A gem to track all SQL queries performed inside a block of code}
   spec.homepage = "https://github.com/lipanski/sql-spy"
   spec.license = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
