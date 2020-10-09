@@ -4,9 +4,18 @@
 
 A gem to track all SQL queries performed inside a block of code.
 
-You can use **SqlSpy** to test the total amount of queries performed by a piece of code, the amount of queries per table, selects vs. inserts vs. updates vs. deletes, or query duration. You can also use it to validate and debug your SQL or to prevent N+1 queries.
+With **SqlSpy** you can test:
+
+- The total amount of queries performed by a piece of code
+- The amount of queries performed on a specific table
+- The type of these queries: *SELECT*, *INSERT*, *UPDATE*, *DELETE*
+- The query duration
+- The SQL produced by your *ActiveRecord* code
+- N+1 queries
 
 The implementation is inspired by how [ActiveRecord is tested](https://github.com/rails/rails/blob/6-0-stable/activerecord/test/cases/test_case.rb).
+
+Check out [my blog post](https://lipanski.com/posts/activerecord-eager-loading#preventing-n1-regressions-with-tests) about writing controller tests with **SqlSpy** in order to prevent N+1 regressions.
 
 ## Usage
 
@@ -16,7 +25,7 @@ Add the gem to your `Gemfile`:
 gem "sql_spy"
 ```
 
-...and install it with:
+Install it:
 
 ```sh
 bundle install
@@ -42,7 +51,7 @@ The `SqlSpy.track` method will return **an array containing all the queries perf
 - `#update?`: Is this an *UPDATE* query?
 - `#delete?`: Is this a *DELETE* query?
 
-Here are some **ideas** for how you could use this:
+Here are some **ideas** of how you could use this:
 
 ```ruby
 # Expect less than 5 queries
@@ -57,7 +66,7 @@ assert_equal 2, queries.select { |query| query.model_name == "Post" }.size
 # None of the queries should be slower than 100ms
 assert queries.none? { |query| query.duration > 100 }
 
-# Fail on N+1 queries: expect no more than 1 query per table
+# Fail on N+1 queries: expect at most 1 query per table
 queries_by_model = queries.group_by(&:model_name)
 assert queries_by_model.none? { |model_name, queries| queries.count > 1 }
 ```
