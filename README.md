@@ -78,7 +78,7 @@ The gem is tested with Postgres 9.6 and SQLite 3.
 To run tests with SQLite:
 
 ```sh
-bundle exec rake
+rake
 ```
 
 To run tests with Postgres:
@@ -87,7 +87,7 @@ To run tests with Postgres:
 # Create a test database
 cretedb sql_spy_test
 
-DATABASE_URL=postgres:///sql_spy_test bundle exec rake
+DATABASE_URL=postgres:///sql_spy_test rake
 ```
 
 ## License
