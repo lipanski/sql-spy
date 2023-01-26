@@ -144,7 +144,7 @@ class SqlSpyTest < Minitest::Test
     refute query.delete?
   end
 
-  def test_error
+  def test_unsubscribe_on_error
     mock = MiniTest::Mock.new
     mock.expect(:call, true, [Object])
     ActiveSupport::Notifications.stub(:unsubscribe, mock) do
