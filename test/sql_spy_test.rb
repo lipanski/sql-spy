@@ -143,4 +143,20 @@ class SqlSpyTest < Minitest::Test
     refute query.update?
     refute query.delete?
   end
+
+  def test_error
+    mock = MiniTest::Mock.new
+    mock.expect(:call, true, [Object])
+    ActiveSupport::Notifications.stub(:unsubscribe, mock) do
+      begin
+        queries = SqlSpy.track do
+          raise "error in block"
+        end
+      rescue => e
+        assert_equal("error in block", e.message)
+      end
+    end
+
+    mock.verify
+  end
 end
