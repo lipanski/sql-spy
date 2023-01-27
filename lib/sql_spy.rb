@@ -37,11 +37,16 @@ module SqlSpy
   end
 
   def self.track
+
     tracker = Tracker.new
 
-    ActiveSupport::Notifications.subscribe("sql.active_record", tracker)
-    yield
-    ActiveSupport::Notifications.unsubscribe(tracker)
+    subscriber = ActiveSupport::Notifications.subscribe("sql.active_record", tracker)
+
+    begin
+      yield
+    ensure
+      ActiveSupport::Notifications.unsubscribe(subscriber)
+    end
 
     tracker.queries
   end
